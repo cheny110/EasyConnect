@@ -32,7 +32,7 @@ def loggin():
     usr_pwd='123123'
     ip=getip()
     mac=get_mac()
-    check_time()
+    #check_time()
     if mac in mac_list:
         print("MAC Address Right!")
     else:
