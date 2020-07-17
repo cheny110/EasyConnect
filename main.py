@@ -5,6 +5,7 @@ import datetime
 mac_list=['a0c589865439','502b73d42c7a']
 expire_time=[2020,8,31]
 def check_time():
+    #check program whether in valid date
     i = datetime.datetime.now()
     if i.year==expire_time[0] and i.month<=expire_time[1] and i.day<=expire_time[2]:
         pass
@@ -12,11 +13,13 @@ def check_time():
         print("program expired,connected failed")
         exit()
 def get_mac():
+    "get mac address to specify computer"
     node = uuid.getnode()
     mac=uuid.UUID(int=node).hex[-12:]
     return mac
 
 def getip():
+    "get internet ip"
     try:
         s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
         s.connect(('8.8.8.8',80))
@@ -28,17 +31,21 @@ def getip():
 
     pass
 def loggin():
+    "log in to school wifi"
     usr_name=',0,1998004'
-    usr_pwd='123123'
+    usr_pwd=''#set password here
     ip=getip()
     mac=get_mac()
-    #check_time()
+
+    #check whether application expired
+    check_time()
     if mac in mac_list:
         print("MAC Address Right!")
     else:
         print("MAC Address fault! Connected failed")
         exit()
 
+    #submit form content
     form_content={
         'DDDDD':usr_name,
         'upass':usr_pwd,
@@ -57,9 +64,11 @@ def loggin():
         'cmd':'',
         'loggin':''
     }
+    #url address
     signin_url="http://10.168.6.10/a70.htm?wlanuserip="+ip+\
                "&wlanacip=10.168.6.9&wlanacname=&vlanid=0&ip="+ip+\
                "&ssid=null&areaID=null&mac=00-00-00-00-00-00"
+
     headers={
     'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Encoding':'gzip,deflate',
@@ -75,6 +84,7 @@ def loggin():
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'
     }
 
+    #handle response
     resp=requests.get(signin_url,headers)
     resp.encoding = resp.apparent_encoding
     #print(resp.text)
@@ -82,5 +92,6 @@ def loggin():
     resp.encoding=resp.apparent_encoding
     print("Connected successfully!")
 
+# program entrance
 if __name__=='__main__':
     loggin()
