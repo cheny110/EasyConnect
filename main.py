@@ -2,32 +2,48 @@ import requests
 import socket
 import uuid
 import datetime
-from pynotificator import DesktopNotification
+import pynotificator
+
 mac_list=['a0c589865439','502b73d42c7a']
 expire_time=[2020,8,31]
 
+
 def send_notify(msg):
-    notify_box=DesktopNotification(msg,'EasyConnect','Waring',icon='network-wireless')
+    '''
+    This program send notification to desktop users! It only works in linux platform.
+    If you want this function on windows platform, change pynotificator to punotificator[win] manually.
+    :param msg:Nitofication message string you want to send .
+    :return:None
+    '''
+    notify_box=pynotificator.DesktopNotification(msg,'EasyConnect','Waring',icon='network-wireless')
     notify_box.notify()
 
 
 def check_time():
-    #check program whether in valid date
+    '''
+    check program whether in valid date
+    '''
     i = datetime.datetime.now()
     if i.year==expire_time[0] and i.month<=expire_time[1] and i.day<=expire_time[2]:
         pass
     else :
         print("program expired,connected failed")
-        send_notify("Oops, Program expired !")
+        msg="Oops, Program expired !"
+        send_notify(msg)
+        logger(msg)
         exit()
+
 def get_mac():
-    "get mac address to specify computer"
+    '''
+    get mac address to specify computer
+    '''
     node = uuid.getnode()
     mac=uuid.UUID(int=node).hex[-12:]
     return mac
 
 def getip():
-    "get internet ip"
+
+    '''get internet ip'''
     try:
         s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
         s.connect(('8.8.8.8',80))
@@ -38,10 +54,11 @@ def getip():
     return ip
 
     pass
+
 def loggin():
     "log in to school wifi"
-    usr_name=',0,'#replace 'account'with your own account
-    usr_pwd=''#set password here
+    usr_name=',0,1998004'#replace 'account'with your own account
+    usr_pwd='123123'#set password here
     ip=getip()
     mac=get_mac()
 
@@ -51,7 +68,9 @@ def loggin():
         print("MAC Address Right!")
     else:
         print("MAC Address fault! Connected failed")
-        send_notify("Oops, MAC address doesn't match inner record!")
+        msg="Oops, MAC address doesn't match inner record!"
+        send_notify(msg)
+        logger(msg)
         send_notify("Your current MAC address is :"+mac)
         exit()
 
@@ -100,9 +119,21 @@ def loggin():
     #print(resp.text)
     resp=requests.post('http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1',form_content,headers)
     resp.encoding=resp.apparent_encoding
-    print("Connected successfully!")
+    print(resp)
+    #print("Connected successfully!")
     send_notify("Your current MAC is :"+mac)
     send_notify("Good, WIFI connected successfully!")
+    logger("connected to wifi successfully")
+
+
+def logger(log):
+    file_obj = open('log.txt','a+')
+    now = datetime.datetime.now()
+    file_obj.write(now.strftime('%Y-%m-%d %H:%M:%S:'))
+    file_obj.write(log+'\n')
+    file_obj.close()
+
+
 
 # program entrance
 if __name__=='__main__':
