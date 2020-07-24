@@ -127,7 +127,7 @@ def loggin():
 
 
 def logger(log):
-    file_obj = open('log.txt','a+')
+    file_obj = open('easy_connect_log.txt','a+')
     now = datetime.datetime.now()
     file_obj.write(now.strftime('%Y-%m-%d %H:%M:%S:'))
     file_obj.write(log+'\n')
