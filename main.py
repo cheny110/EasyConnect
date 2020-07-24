@@ -3,7 +3,7 @@ import socket
 import uuid
 import datetime
 import pynotificator
-
+import re
 mac_list=['a0c589865439','502b73d42c7a']
 expire_time=[2020,8,31]
 
@@ -30,7 +30,7 @@ def check_time():
         print("program expired,connected failed")
         msg="Oops, Program expired !"
         send_notify(msg)
-        logger(msg)
+        logger('connection faild due to program expired')
         exit()
 
 def get_mac():
@@ -39,6 +39,7 @@ def get_mac():
     '''
     node = uuid.getnode()
     mac=uuid.UUID(int=node).hex[-12:]
+    logger("get mac once,ID:"+mac)
     return mac
 
 def getip():
@@ -116,11 +117,8 @@ def loggin():
     #handle response
     resp=requests.get(signin_url,headers)
     resp.encoding = resp.apparent_encoding
-    #print(resp.text)
     resp=requests.post('http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1',form_content,headers)
-    resp.encoding=resp.apparent_encoding
-    print(resp)
-    #print("Connected successfully!")
+    #resp.encoding=resp.apparent_encoding
     send_notify("Your current MAC is :"+mac)
     send_notify("Good, WIFI connected successfully!")
     logger("connected to wifi successfully")
