@@ -3,7 +3,6 @@ import socket
 import uuid
 import datetime
 import pynotificator
-import re
 mac_list=['a0c589865439','502b73d42c7a']
 expire_time=[2020,8,31]
 
