@@ -2,8 +2,15 @@ import requests
 import socket
 import uuid
 import datetime
+from pynotificator import DesktopNotification
 mac_list=['a0c589865439','502b73d42c7a']
 expire_time=[2020,8,31]
+
+def send_notify(msg):
+    notify_box=DesktopNotification(msg,'EasyConnect','Waring',icon='network-wireless')
+    notify_box.notify()
+
+
 def check_time():
     #check program whether in valid date
     i = datetime.datetime.now()
@@ -11,6 +18,7 @@ def check_time():
         pass
     else :
         print("program expired,connected failed")
+        send_notify("Error, Program expired !")
         exit()
 def get_mac():
     "get mac address to specify computer"
@@ -32,8 +40,8 @@ def getip():
     pass
 def loggin():
     "log in to school wifi"
-    usr_name=',0,account'#replace 'account'with your own account
-    usr_pwd=''#set password here
+    usr_name=',0,1998004'#replace 'account'with your own account
+    usr_pwd='123123'#set password here
     ip=getip()
     mac=get_mac()
 
@@ -43,6 +51,7 @@ def loggin():
         print("MAC Address Right!")
     else:
         print("MAC Address fault! Connected failed")
+        send_notify("Error, MAC address doesn't match inner record!")
         exit()
 
     #submit form content
@@ -91,6 +100,7 @@ def loggin():
     resp=requests.post('http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1',form_content,headers)
     resp.encoding=resp.apparent_encoding
     print("Connected successfully!")
+    send_notify("Good, WIFI connected successfully!")
 
 # program entrance
 if __name__=='__main__':

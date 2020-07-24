@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['../main.py'],
-             pathex=['/home/cheny/Documents/Pycharm/network/PyInstaller-3.6'],
+             pathex=['/home/cheny/PycharmProjects/EasyConnect/PyInstaller-3.6'],
              binaries=[],
              datas=[],
              hiddenimports=[],

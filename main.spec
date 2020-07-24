@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['/home/cheny/Documents/Pycharm/network'],
+             pathex=['./venv/lib/python3.7/site-packages', '/home/cheny/PycharmProjects/EasyConnect'],
              binaries=[],
              datas=[],
              hiddenimports=[],
