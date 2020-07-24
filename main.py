@@ -18,7 +18,7 @@ def check_time():
         pass
     else :
         print("program expired,connected failed")
-        send_notify("Error, Program expired !")
+        send_notify("Oops, Program expired !")
         exit()
 def get_mac():
     "get mac address to specify computer"
@@ -51,7 +51,8 @@ def loggin():
         print("MAC Address Right!")
     else:
         print("MAC Address fault! Connected failed")
-        send_notify("Error, MAC address doesn't match inner record!")
+        send_notify("Oops, MAC address doesn't match inner record!")
+        send_notify("Your current MAC address is :"+mac)
         exit()
 
     #submit form content
@@ -100,6 +101,7 @@ def loggin():
     resp=requests.post('http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1',form_content,headers)
     resp.encoding=resp.apparent_encoding
     print("Connected successfully!")
+    send_notify("Your current MAC is :"+mac)
     send_notify("Good, WIFI connected successfully!")
 
 # program entrance
