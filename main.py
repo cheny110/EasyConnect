@@ -57,8 +57,8 @@ def getip():
 
 def loggin():
     "log in to school wifi"
-    usr_name=',0,1998004'#replace 'account'with your own account
-    usr_pwd='123123'#set password here
+    usr_name=',0,account'#replace 'account'with your own account
+    usr_pwd='password'#set password here
     ip=getip()
     mac=get_mac()
 
