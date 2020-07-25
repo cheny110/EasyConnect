@@ -1,0 +1,28 @@
+2020-07-24 20:20:21:connected to wifi successfully
+2020-07-24 20:29:14:get mac once,ID:a0c589865439
+2020-07-24 20:29:14:connected to wifi successfully
+2020-07-24 20:30:14:get mac once,ID:a0c589865439
+2020-07-24 20:30:14:connected to wifi successfully
+2020-07-24 20:34:26:get mac once,ID:a0c589865439
+2020-07-24 20:34:26:connected to wifi successfully
+2020-07-24 20:35:19:get mac once,ID:a0c589865439
+2020-07-24 20:35:20:connected to wifi successfully
+2020-07-24 20:35:27:get mac once,ID:a0c589865439
+2020-07-24 20:35:39:get mac once,ID:a0c589865439
+2020-07-24 20:35:40:connected to wifi successfully
+2020-07-24 20:36:37:get mac once,ID:a0c589865439
+2020-07-24 20:36:37:connected to wifi successfully
+2020-07-24 20:41:09:get mac once,ID:a0c589865439
+2020-07-24 20:41:09:connected to wifi successfully
+2020-07-24 20:42:01:get mac once,ID:a0c589865439
+2020-07-24 20:42:01:connected to wifi successfully
+2020-07-24 20:42:59:get mac once,ID:a0c589865439
+2020-07-24 20:42:59:connected to wifi successfully
+2020-07-24 20:48:25:get mac once,ID:a0c589865439
+2020-07-24 20:48:25:connected to wifi successfully
+2020-07-24 20:49:37:get mac once,ID:a0c589865439
+2020-07-24 20:49:37:connected to wifi successfully
+2020-07-24 20:51:36:get mac once,ID:a0c589865439
+2020-07-24 20:51:37:connected to wifi successfully
+2020-07-24 20:54:18:get mac once,ID:a0c589865439
+2020-07-24 20:54:37:get mac once,ID:a0c589865439
