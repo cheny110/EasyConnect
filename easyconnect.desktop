@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=EasyConnect
+Icon=/opt/apps/easyconnect/EasyConnect.ico
+Comment=An easy tool to connect to school wifi
+Exec="/opt/apps/easyconnect/easyconnect"
+Version=1.2
+Type=Application
+Categories=Tools
+Terminal=false
+X-Deepin-CreatedBy=cheny
+X-Deepin-AppID=easyconnect
