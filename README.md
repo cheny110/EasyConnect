@@ -9,9 +9,10 @@ Development Environment:Linux Deepin,Pycharm .
 
 email to chenyprivate@vip.qq.com for help
 
-                                                  --by cheny
+                                                
 File tree:
-    EasyConnect:
+
+    EasyConnect:    
                 .gti : git relevant 
                 .idea: pycharm project file
                  venv: python virtual environment files ,containing lib file necessary for build program.
@@ -38,3 +39,5 @@ Illustration:
        function in the program may doesn't work in Windows system, you can relpace notifactor modules with notifactor[win] modules.
        run command "pip uninstall notifactor" ; "pip install notifactor[win]" You may run command with previledge rights and install pip                            first.
         when on Windows system , your should build this program with command "pyinstaller -F main.py -p "./EasyConnect/venv/lib/python3.7/site-packages" -i EasyConnect.ico" . Then cd to ./EasyConnect/dist ,if you build this program successfully,you should see an executive file,just put it in your favorite place then double click on it to run.
+
+                                                                        --by cheny
