@@ -9,7 +9,7 @@ setup(
     url="https://github.com/cheny110/EasyConnect",
     author='cheny',
     author_email="chenyprivate@vip.qq.com",
-    packages=find_packages(),
+    packages=[""],
     include_package_data=True,
     platforms="linux",
     scripts=['main.py'],
