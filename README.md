@@ -35,6 +35,7 @@ Way to install this program:
 
        5.in windows, change pynotificator to pynotifactor[win] to support popup notify function. Or you can remove send_notify() function . 
           and you should pack the program by yourself if you'd like to do so.
+       6.if your have packed this program, make sure put your application and student_config.json and teacher_config.json in one folder.
     
 Way to uninstall this program:
        please refer to the way to install this program to run uninstll.sh to remove this program from you system.
