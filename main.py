@@ -57,23 +57,13 @@ def getip():
 
 def loggin():
     "log in to school wifi"
-    usr_name=',0,account'#replace 'account'with your own account
-    usr_pwd='password'#set password here
+    usr_name=',0,1998004'#replace 'account'with your own account
+    usr_pwd='123123'#set password here
+   
+    #check whether application expired
+
     ip=getip()
     mac=get_mac()
-
-    #check whether application expired
-    check_time()
-    if mac in mac_list:
-        print("MAC Address Right!")
-    else:
-        print("MAC Address fault! Connected failed")
-        msg="Oops, MAC address doesn't match inner record!"
-        send_notify(msg)
-        logger(msg)
-        send_notify("Your current MAC address is :"+mac)
-        exit()
-
     #submit form content
     form_content={
         'DDDDD':usr_name,
