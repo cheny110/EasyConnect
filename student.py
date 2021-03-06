@@ -3,7 +3,7 @@ import socket
 import uuid
 import datetime
 import pynotificator
-from main import send_notify,get_mac,getip
+from main import send_notify,get_mac,getip,load_data,headers
 import json
 
 
@@ -23,15 +23,11 @@ def login_student():
     'Upgrade-Insecure-Requests':'1',
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'
     }
-    sub_json=load_data()
+    sub_json=load_data('student_config.json')
     resp=requests.post('http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1',sub_json,headers)
-    print(resp.status_code)
-def load_data():
-    with open('student_config.json') as f:
-        sub_json=json.load(f)
-        f.close()
-    
-    return sub_json
+    #print(resp.status_code)
+    return resp.status_code
+
 
         
 
@@ -39,7 +35,11 @@ def load_data():
 if __name__=='__main__':
     ip=getip()
     mac=get_mac()
-    login_student()
+    status=login_student()
+    if status is 200:
+        send_notify("连接成功")
+    else:
+        send_notify("连接失败,请重新尝试")
     
 
 

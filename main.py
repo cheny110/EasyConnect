@@ -3,8 +3,22 @@ import socket
 import uuid
 import datetime
 import pynotificator
-mac_list=['a0c589865439','502b73d42c7a']
-expire_time=[2020,8,31]
+import json
+
+headers={
+    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Encoding':'gzip,deflate',
+    'Accept-Language':'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+    'Connection':'keep-alive',
+    'Content-Length':'152',
+    'Content-Type':'application/x-www-form-urlencoded',
+    'Cookie':'program=new;vlan=0;ip=10.67.24.132;ssid=null;areaID=null;md5_login2=%2C0%2C1998004%7C123123; PHPSESSID=f2fp2ubgiem23r9kttrpe0cjl0',
+    'Host':'10.168.6.10:801',
+    'Origin':'http://10.168.6.10',
+    'Referer':'http://10.168.6.10/a70.htm?wlanuserip=10.67.24.132&wlanacip=10.168.6.9&wlanacname=&vlanid=0&ip=10.67.24.132&ssid=null&areaID=null&mac=00-00-00-00-00-00',
+    'Upgrade-Insecure-Requests':'1',
+    'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'
+    }
 
 
 def send_notify(msg):
@@ -18,19 +32,6 @@ def send_notify(msg):
     notify_box.notify()
 
 
-def check_time():
-    '''
-    check program whether in valid date
-    '''
-    i = datetime.datetime.now()
-    if i.year==expire_time[0] and i.month<=expire_time[1] and i.day<=expire_time[2]:
-        pass
-    else :
-        print("program expired,connected failed")
-        msg="Oops, Program expired !"
-        send_notify(msg)
-        logger('connection faild due to program expired')
-        exit()
 
 def get_mac():
     '''
@@ -38,7 +39,7 @@ def get_mac():
     '''
     node = uuid.getnode()
     mac=uuid.UUID(int=node).hex[-12:]
-    logger("get mac once,ID:"+mac)
+    #logger("get mac once,ID:"+mac)
     return mac
 
 def getip():
@@ -56,70 +57,41 @@ def getip():
     pass
 
 def loggin():
-    "log in to school wifi"
-    usr_name=',0,1998004'#replace 'account'with your own account
-    usr_pwd='123123'#set password here
+    "log in to school wifi zzuli-teacher"
    
     #check whether application expired
 
     ip=getip()
     mac=get_mac()
     #submit form content
-    form_content={
-        'DDDDD':usr_name,
-        'upass':usr_pwd,
-        'R1':'0',
-        'R2':'0',
-        'R3': '0',
-        'R6':'0',
-        'para':'00',
-        '0MKKey':'123456',
-        'buttonClicked':'',
-        'redirect_url':'',
-        'err_flag':'',
-        'username':'',
-        'password':'',
-        'user':'',
-        'cmd':'',
-        'loggin':''
-    }
+    sub_json=load_data('teacher_config.json')
     #url address
-    signin_url="http://10.168.6.10/a70.htm?wlanuserip="+ip+\
-               "&wlanacip=10.168.6.9&wlanacname=&vlanid=0&ip="+ip+\
-               "&ssid=null&areaID=null&mac=00-00-00-00-00-00"
-
-    headers={
-    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Accept-Encoding':'gzip,deflate',
-    'Accept-Language':'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
-    'Connection':'keep-alive',
-    'Content-Length':'152',
-    'Content-Type':'application/x-www-form-urlencoded',
-    'Cookie':'program=new;vlan=0;ip=10.67.24.132;ssid=null;areaID=null;md5_login2=%2C0%2C1998004%7C123123; PHPSESSID=f2fp2ubgiem23r9kttrpe0cjl0',
-    'Host':'10.168.6.10:801',
-    'Origin':'http://10.168.6.10',
-    'Referer':'http://10.168.6.10/a70.htm?wlanuserip=10.67.24.132&wlanacip=10.168.6.9&wlanacname=&vlanid=0&ip=10.67.24.132&ssid=null&areaID=null&mac=00-00-00-00-00-00',
-    'Upgrade-Insecure-Requests':'1',
-    'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'
-    }
+    signin_url='http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1'
+   
 
     #handle response
     resp=requests.get(signin_url,headers)
     resp.encoding = resp.apparent_encoding
-    resp=requests.post('http://10.168.6.10:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=10.168.6.10&iTermType=1&wlanuserip='+ip+'&wlanacip=10.168.6.9&mac=00-00-00-00-00-00&ip='+ip+'&enAdvert=0&queryACIP=0&loginMethod=1',form_content,headers)
-    #resp.encoding=resp.apparent_encoding
-    send_notify("Your current MAC is :"+mac)
-    send_notify("Good, WIFI connected successfully!")
-    logger("connected to wifi successfully")
+    resp=requests.post(signin_url,sub_json,headers)
+    return  resp.status_code
 
 
 def logger(log):
+    '''
+    简单日志记录
+    '''
     file_obj = open('easy_connect_log.txt','a+')
     now = datetime.datetime.now()
     file_obj.write(now.strftime('%Y-%m-%d %H:%M:%S:'))
     file_obj.write(log+'\n')
     file_obj.close()
 
+def load_data(file):
+    with open(file) as f:
+        sub_json=json.load(f)
+        f.close()
+    
+    return sub_json
 
 
 # program entrance

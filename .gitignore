@@ -1,7 +1,8 @@
 # created by virtualenv automatically
-/lib
-/.idea
-/vscode
-/dist
-/lib
+/lib/*
+/.idea/*
+/vscode/*
+/dist/*
+/lib/*
 /easy_connect_log.txt
+/build/*
